@@ -3,10 +3,11 @@
 @section('header', 'Add New Usage Record')
 
 @section('content')
-<div class="max-w-xl mx-auto bg-card border border-border/60 rounded-3xl shadow-lg p-10 transition-all duration-300">
-    <div class="mb-8">
-        <h3 class="text-2xl font-extrabold text-foreground tracking-tight">Log Consumption</h3>
-        <p class="text-sm text-muted-foreground mt-2">Record a new reading for water or electricity usage.</p>
+@include('partials.page-background', ['bgImage' => 'images/water-electricity-meter.jpg', 'bgAlt' => 'Add usage'])
+<div class="max-w-xl mx-auto bg-card border border-border/60 rounded-2xl md:rounded-3xl shadow-md p-5 sm:p-8 md:p-10 transition-all duration-300">
+    <div class="mb-6 md:mb-8">
+        <h3 class="text-xl md:text-2xl font-extrabold text-foreground tracking-tight">Log Consumption</h3>
+        <p class="text-xs md:text-sm text-muted-foreground mt-2">Record a new reading for water or electricity usage.</p>
     </div>
 
     <form action="{{ route('add-usage.store') }}" method="POST" class="space-y-6">

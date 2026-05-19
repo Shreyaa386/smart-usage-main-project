@@ -1,66 +1,95 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Water and Electricity Tracker
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A Laravel-based web application for monitoring and tracking water and electricity consumption. Built with modern UI using Tailwind CSS and Chart.js for data visualization.
 
-## About Laravel
+## Features
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- **Dashboard**: Real-time overview of water and electricity usage with interactive charts
+- **Usage Logging**: Add new consumption records for different devices and locations
+- **History**: View detailed usage history with filtering by time period
+- **Analytics**: Analyze consumption patterns across devices with insights
+- **Alerts**: Get notified when consumption exceeds threshold levels
+- **User Management**: Admin can view all users and their consumption data
+- **Dark Mode**: Toggle between light and dark themes
+- **Responsive Design**: Works seamlessly on desktop and mobile devices
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Tech Stack
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- **Backend**: Laravel 10.x
+- **Frontend**: Blade Templates
+- **Styling**: Tailwind CSS
+- **Charts**: Chart.js
+- **Icons**: Font Awesome
+- **Database**: MySQL
 
-## Learning Laravel
+## Installation
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+1. Clone the repository
+2. Install dependencies:
+   ```bash
+   composer install
+   npm install
+   ```
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+3. Copy environment file:
+   ```bash
+   cp .env.example .env
+   ```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+4. Generate application key:
+   ```bash
+   php artisan key:generate
+   ```
 
-## Laravel Sponsors
+5. Configure database in `.env` file
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+6. Run migrations:
+   ```bash
+   php artisan migrate
+   ```
 
-### Premium Partners
+7. Start development server:
+   ```bash
+   php artisan serve
+   ```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+8. Visit `http://localhost:8000`
 
-## Contributing
+## Default Credentials
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- **Admin**: admin@gmail.com / admin123
+- **Regular User**: Register through signup page
 
-## Code of Conduct
+## Project Structure
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```
+├── app/
+│   ├── Http/
+│   │   └── Controllers/
+│   └── Models/
+├── resources/
+│   └── views/
+│       ├── auth/
+│       ├── layout.blade.php
+│       ├── dashboard.blade.php
+│       ├── add-usage.blade.php
+│       ├── usage-history.blade.php
+│       ├── analytics.blade.php
+│       └── alerts.blade.php
+├── public/
+│   └── images/
+└── routes/
+```
 
-## Security Vulnerabilities
+## Usage
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+1. Login with your credentials
+2. Navigate to Dashboard to view overall consumption
+3. Use "Add Usage" to log new readings
+4. Check "History" for detailed records
+5. View "Analytics" for device-wise consumption patterns
+6. Monitor "Alerts" for high usage warnings
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This project is open-sourced software licensed under the MIT license.

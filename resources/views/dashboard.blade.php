@@ -3,16 +3,17 @@
 @section('header', 'System Dashboard')
 
 @section('content')
-<div class="mb-6 flex space-x-2 border-b border-border pb-4">
-    <a href="{{ route('dashboard', ['period' => 'day']) }}" class="px-4 py-2 text-sm font-medium rounded-md transition-colors {{ (isset($period) && $period === 'day') ? 'bg-primary text-primary-foreground shadow-sm' : 'text-muted-foreground hover:bg-muted/50' }}">Today</a>
-    <a href="{{ route('dashboard', ['period' => 'month']) }}" class="px-4 py-2 text-sm font-medium rounded-md transition-colors {{ (isset($period) && $period === 'month') ? 'bg-primary text-primary-foreground shadow-sm' : 'text-muted-foreground hover:bg-muted/50' }}">This Month</a>
-    <a href="{{ route('dashboard', ['period' => 'year']) }}" class="px-4 py-2 text-sm font-medium rounded-md transition-colors {{ (isset($period) && $period === 'year') ? 'bg-primary text-primary-foreground shadow-sm' : 'text-muted-foreground hover:bg-muted/50' }}">This Year</a>
-    <a href="{{ route('dashboard', ['period' => 'all']) }}" class="px-4 py-2 text-sm font-medium rounded-md transition-colors {{ (!isset($period) || $period === 'all') ? 'bg-primary text-primary-foreground shadow-sm' : 'text-muted-foreground hover:bg-muted/50' }}">All Time</a>
+@include('partials.page-background', ['bgImage' => 'images/water-electricity theme.avif', 'bgAlt' => 'Dashboard'])
+<div class="mb-4 md:mb-6 flex space-x-2 overflow-x-auto bg-card rounded-xl px-2 py-2 shadow-sm border border-border/60">
+    <a href="{{ route('dashboard', ['period' => 'day']) }}" class="px-3 md:px-4 py-1.5 md:py-2 text-xs md:text-sm font-medium rounded-md transition-colors whitespace-nowrap {{ (isset($period) && $period === 'day') ? 'bg-primary text-primary-foreground shadow-sm' : 'text-muted-foreground hover:bg-muted/50' }}">Today</a>
+    <a href="{{ route('dashboard', ['period' => 'month']) }}" class="px-3 md:px-4 py-1.5 md:py-2 text-xs md:text-sm font-medium rounded-md transition-colors whitespace-nowrap {{ (isset($period) && $period === 'month') ? 'bg-primary text-primary-foreground shadow-sm' : 'text-muted-foreground hover:bg-muted/50' }}">This Month</a>
+    <a href="{{ route('dashboard', ['period' => 'year']) }}" class="px-3 md:px-4 py-1.5 md:py-2 text-xs md:text-sm font-medium rounded-md transition-colors whitespace-nowrap {{ (isset($period) && $period === 'year') ? 'bg-primary text-primary-foreground shadow-sm' : 'text-muted-foreground hover:bg-muted/50' }}">This Year</a>
+    <a href="{{ route('dashboard', ['period' => 'all']) }}" class="px-3 md:px-4 py-1.5 md:py-2 text-xs md:text-sm font-medium rounded-md transition-colors whitespace-nowrap {{ (!isset($period) || $period === 'all') ? 'bg-primary text-primary-foreground shadow-sm' : 'text-muted-foreground hover:bg-muted/50' }}">All Time</a>
 </div>
 
 @if(isset($suggestions) && count($suggestions) > 0)
 <div class="mb-8">
-    <h3 class="text-lg font-semibold tracking-tight text-foreground mb-4">Smart Suggestions</h3>
+    <h3 class="text-base sm:text-lg font-semibold tracking-tight text-foreground mb-3 sm:mb-4">Smart Suggestions</h3>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         @foreach($suggestions as $suggestion)
         <div class="flex items-center p-4 bg-card border {{ $suggestion['border'] }} rounded-xl shadow-sm transition-shadow hover:shadow-md">
@@ -28,9 +29,9 @@
 </div>
 @endif
 
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-6 md:mb-8">
     <!-- Total Water -->
-    <div class="bg-card border border-border/60 rounded-2xl shadow-sm p-6 relative overflow-hidden group hover:shadow-md transition-all duration-300">
+    <div class="bg-card shadow-sm border border-border/60 rounded-2xl shadow-sm p-4 sm:p-6 relative overflow-hidden group hover:shadow-md transition-all duration-300">
         <div class="absolute top-0 right-0 w-24 h-24 bg-water/5 rounded-full -mr-8 -mt-8 transition-transform group-hover:scale-110"></div>
         <div class="flex items-center relative z-10">
             <div class="p-3 rounded-xl bg-water/10 text-water mr-4">
@@ -38,13 +39,13 @@
             </div>
             <div>
                 <p class="text-[10px] text-muted-foreground font-bold uppercase tracking-widest mb-1">Total Water</p>
-                <p class="text-3xl font-extrabold text-foreground">{{ number_format($totalWater, 2) }} <span class="text-sm font-medium text-muted-foreground">L</span></p>
+                <p class="text-2xl md:text-3xl font-extrabold text-foreground">{{ number_format($totalWater, 2) }} <span class="text-xs md:text-sm font-medium text-muted-foreground">L</span></p>
             </div>
         </div>
     </div>
     
     <!-- Total Electricity -->
-    <div class="bg-card border border-border/60 rounded-2xl shadow-sm p-6 relative overflow-hidden group hover:shadow-md transition-all duration-300">
+    <div class="bg-card shadow-sm border border-border/60 rounded-2xl shadow-sm p-4 sm:p-6 relative overflow-hidden group hover:shadow-md transition-all duration-300">
         <div class="absolute top-0 right-0 w-24 h-24 bg-electricity/5 rounded-full -mr-8 -mt-8 transition-transform group-hover:scale-110"></div>
         <div class="flex items-center relative z-10">
             <div class="p-3 rounded-xl bg-electricity/10 text-electricity mr-4">
@@ -52,13 +53,13 @@
             </div>
             <div>
                 <p class="text-[10px] text-muted-foreground font-bold uppercase tracking-widest mb-1">Total Electricity</p>
-                <p class="text-3xl font-extrabold text-foreground">{{ number_format($totalElectricity, 2) }} <span class="text-sm font-medium text-muted-foreground">kWh</span></p>
+                <p class="text-2xl md:text-3xl font-extrabold text-foreground">{{ number_format($totalElectricity, 2) }} <span class="text-xs md:text-sm font-medium text-muted-foreground">kWh</span></p>
             </div>
         </div>
     </div>
 
     <!-- Water Consumption Status -->
-    <div class="bg-card border border-border/60 rounded-2xl shadow-sm p-6 hover:shadow-md transition-all duration-300">
+    <div class="bg-card shadow-sm border border-border/60 rounded-2xl shadow-sm p-4 sm:p-6 hover:shadow-md transition-all duration-300">
         <div class="flex items-center justify-between mb-4">
             <p class="text-[10px] text-muted-foreground font-bold uppercase tracking-widest">Water Today</p>
             @if($todayWater > $yesterdayWater)
@@ -76,7 +77,7 @@
     </div>
 
     <!-- Electricity Consumption Status -->
-    <div class="bg-card border border-border/60 rounded-2xl shadow-sm p-6 hover:shadow-md transition-all duration-300">
+    <div class="bg-card shadow-sm border border-border/60 rounded-2xl shadow-sm p-4 sm:p-6 hover:shadow-md transition-all duration-300">
         <div class="flex items-center justify-between mb-4">
             <p class="text-[10px] text-muted-foreground font-bold uppercase tracking-widest">Elec Today</p>
             @if($todayElectricity > $yesterdayElectricity)
@@ -94,25 +95,25 @@
     </div>
 </div>
 
-<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6 mb-6 md:mb-8">
     <!-- Line Chart Over Time -->
-    <div class="bg-card border border-border rounded-xl shadow-sm p-6">
-        <h3 class="text-lg font-semibold tracking-tight text-foreground mb-4">Recent Usage Trends</h3>
+    <div class="bg-card border border-border rounded-xl shadow-md p-4 md:p-6">
+        <h3 class="text-base md:text-lg font-semibold tracking-tight text-foreground mb-3 md:mb-4">Recent Usage Trends</h3>
         <canvas id="usageTimelineChart" height="200"></canvas>
     </div>
 
     <!-- Bar Chart By Device -->
-    <div class="bg-card border border-border rounded-xl shadow-sm p-6">
-        <h3 class="text-lg font-semibold tracking-tight text-foreground mb-4">Device Consumption</h3>
+    <div class="bg-card border border-border rounded-xl shadow-md p-4 md:p-6">
+        <h3 class="text-base md:text-lg font-semibold tracking-tight text-foreground mb-3 md:mb-4">Device Consumption</h3>
         <canvas id="deviceBarChart" height="200"></canvas>
     </div>
 </div>
 
 @if(Auth::user()->email === 'admin@gmail.com')
-<div class="mt-12 bg-card border border-border/60 rounded-3xl shadow-lg p-8 transition-all duration-300">
-    <div class="flex items-center justify-between mb-8">
+<div class="mt-8 md:mt-12 bg-card border border-border/60 rounded-2xl md:rounded-3xl shadow-lg p-4 md:p-8 transition-all duration-300">
+    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 md:mb-8 gap-3">
         <div>
-            <h3 class="text-xl font-extrabold tracking-tight">System User Overview</h3>
+            <h3 class="text-lg md:text-xl font-extrabold tracking-tight">System User Overview</h3>
             <p class="text-xs text-muted-foreground mt-1">Summary of consumption across all registered users.</p>
         </div>
         <div class="h-10 w-10 bg-primary/10 rounded-xl flex items-center justify-center">

@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\SocialAuthController;
 use App\Http\Controllers\UsageController;
 use App\Http\Controllers\ProfileController;
 
@@ -23,6 +24,9 @@ Route::middleware('guest')->group(function () {
     
     Route::get('/signup', [AuthController::class, 'showSignupForm'])->name('signup');
     Route::post('/signup', [AuthController::class, 'signup'])->name('signup.post');
+
+    Route::get('/auth/{provider}/redirect', [SocialAuthController::class, 'redirect'])->name('social.redirect');
+    Route::get('/auth/{provider}/callback', [SocialAuthController::class, 'callback'])->name('social.callback');
 });
 
 // Authenticated Routes

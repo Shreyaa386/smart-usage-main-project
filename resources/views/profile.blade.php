@@ -3,10 +3,11 @@
 @section('header', 'Profile')
 
 @section('content')
-<div class="max-w-xl mx-auto bg-card border border-border/60 rounded-3xl shadow-lg p-10 transition-all duration-300">
-    <div class="mb-8">
-        <h3 class="text-2xl font-extrabold text-foreground tracking-tight">Account Settings</h3>
-        <p class="text-sm text-muted-foreground mt-2">Manage your personal profile and account preferences.</p>
+@include('partials.page-background', ['bgImage' => 'images/login-bg.png', 'bgAlt' => 'Profile'])
+<div class="max-w-xl mx-auto bg-card shadow-md border border-border/60 rounded-2xl sm:rounded-3xl shadow-lg p-5 sm:p-8 md:p-10 transition-all duration-300">
+    <div class="mb-6 sm:mb-8">
+        <h3 class="text-xl sm:text-2xl font-extrabold text-foreground tracking-tight">Account Settings</h3>
+        <p class="text-xs sm:text-sm text-muted-foreground mt-2">Manage your personal profile and account preferences.</p>
     </div>
 
     <form action="{{ route('profile.update') }}" method="POST" class="space-y-6">

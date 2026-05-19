@@ -1,221 +1,109 @@
 <!DOCTYPE html>
 <html lang="en" class="light">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - smart-usage</title>
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Tailwind CDN config -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      tailwind.config = {
-        darkMode: 'class',
-        theme: {
-          extend: {
-            fontFamily: {
-              sans: ['Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
-            },
-            colors: {
-              border: "hsl(var(--border))",
-              input: "hsl(var(--input))",
-              ring: "hsl(var(--ring))",
-              background: "hsl(var(--background))",
-              foreground: "hsl(var(--foreground))",
-              card: {
-                DEFAULT: "hsl(var(--card))",
-                foreground: "hsl(var(--card-foreground))",
-              },
-              primary: {
-                DEFAULT: "hsl(var(--primary))",
-                foreground: "hsl(var(--primary-foreground))",
-              },
-              secondary: {
-                DEFAULT: "hsl(var(--secondary))",
-                foreground: "hsl(var(--secondary-foreground))",
-              },
-              muted: {
-                DEFAULT: "hsl(var(--muted))",
-                foreground: "hsl(var(--muted-foreground))",
-              },
-              accent: {
-                DEFAULT: "hsl(var(--accent))",
-                foreground: "hsl(var(--accent-foreground))",
-              },
-            },
-            borderRadius: {
-                lg: "var(--radius)",
-                md: "calc(var(--radius) - 2px)",
-                sm: "calc(var(--radius) - 4px)",
-            }
-          }
-        }
-      }
-    </script>
-    <style type="text/tailwindcss">
-      @layer base {
-        :root {
-          --background: 0 0% 100%;
-          --foreground: 224 71.4% 4.1%;
-          --card: 0 0% 100%;
-          --card-foreground: 224 71.4% 4.1%;
-          --primary: 220.9 39.3% 11%;
-          --primary-foreground: 210 20% 98%;
-          --secondary: 220 14.3% 95.9%;
-          --secondary-foreground: 220.9 39.3% 11%;
-          --muted: 220 14.3% 95.9%;
-          --muted-foreground: 220 8.9% 46.1%;
-          --accent: 220 14.3% 95.9%;
-          --accent-foreground: 220.9 39.3% 11%;
-          --border: 220 13% 91%;
-          --input: 220 13% 91%;
-          --ring: 224 71.4% 4.1%;
-          --radius: 0.5rem;
-        }
-        .dark {
-          --background: 224 71.4% 4.1%;
-          --foreground: 210 20% 98%;
-          --card: 224 71.4% 4.1%;
-          --card-foreground: 210 20% 98%;
-          --primary: 210 20% 98%;
-          --primary-foreground: 220.9 39.3% 11%;
-          --secondary: 215 27.9% 16.9%;
-          --secondary-foreground: 210 20% 98%;
-          --muted: 215 27.9% 16.9%;
-          --muted-foreground: 217.9 10.6% 64.9%;
-          --accent: 215 27.9% 16.9%;
-          --accent-foreground: 210 20% 98%;
-          --border: 215 27.9% 16.9%;
-          --input: 215 27.9% 16.9%;
-          --ring: 216 12.2% 83.9%;
-        }
-        body {
-          @apply bg-background text-foreground;
-        }
-      }
-    </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    @include('partials.auth-head', ['title' => 'Login - smart-usage'])
 </head>
-<body class="antialiased min-h-screen flex bg-background selection:bg-primary/10 selection:text-primary">
-    <!-- Left Side: Interactive Login Section -->
-    <div class="w-full md:w-1/2 flex flex-col justify-center items-center p-8 md:p-24 relative z-10 bg-background">
-        <div class="absolute top-10 left-10 flex items-center space-x-3 group cursor-pointer">
-            <div class="w-10 h-10 bg-primary flex items-center justify-center rounded-xl rotate-3 group-hover:rotate-0 transition-transform duration-300">
-                <i class="fa-solid fa-leaf text-primary-foreground text-xl"></i>
+<body class="min-h-screen min-h-[100dvh] flex flex-col lg:flex-row selection:bg-primary/10 selection:text-primary">
+
+    {{-- Mobile & tablet: full-bleed background --}}
+    <div class="fixed inset-0 lg:hidden z-0" aria-hidden="true">
+        <img src="{{ asset('images/login-bg.png') }}" alt="" class="h-full w-full object-cover">
+        <div class="absolute inset-0 bg-background/55 sm:bg-background/60"></div>
+    </div>
+
+    {{-- Form panel --}}
+    <div class="relative z-10 w-full lg:w-1/2 flex flex-col justify-center items-center px-4 py-8 sm:px-8 sm:py-10 md:px-12 lg:px-16 xl:px-24 lg:bg-background min-h-[100dvh]">
+        <div class="relative w-full max-w-[400px] flex flex-col min-h-0 flex-1 lg:flex-none justify-center rounded-2xl border border-border/40 bg-card/95 backdrop-blur-md shadow-lg p-5 sm:p-6 lg:border-0 lg:bg-transparent lg:shadow-none lg:backdrop-blur-none lg:p-0 lg:rounded-none">
+            <a href="{{ route('login') }}" class="flex items-center space-x-2.5 sm:space-x-3 mb-6 sm:mb-8 self-start group">
+                <div class="w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 bg-primary flex items-center justify-center rounded-xl rotate-3 group-hover:rotate-0 transition-transform duration-300">
+                    <i class="fa-solid fa-leaf text-primary-foreground text-base sm:text-lg"></i>
+                </div>
+                <span class="text-lg sm:text-xl md:text-2xl font-bold tracking-tight text-foreground">smart-usage</span>
+            </a>
+
+            <div class="mb-6 sm:mb-8 md:mb-10">
+                <h1 class="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-foreground mb-1.5 sm:mb-2 md:mb-3">Welcome back</h1>
+                <p class="text-muted-foreground text-sm sm:text-base leading-relaxed">Enter your details below to access your workspace.</p>
             </div>
-            <span class="text-2xl font-bold tracking-tight text-foreground">smart-usage</span>
-        </div>
-        
-        <div class="w-full max-w-[400px]">
-            <div class="mb-10 text-center md:text-left">
-                <h1 class="text-4xl font-extrabold tracking-tight text-foreground mb-3">Welcome back</h1>
-                <p class="text-muted-foreground text-base">Enter your details below to access your workspace.</p>
-            </div>
-            
+
             @if(session('error'))
-                <div class="bg-destructive/10 text-destructive p-4 rounded-lg mb-8 text-sm border border-destructive/20 flex items-center gap-3">
-                    <i class="fa-solid fa-circle-exclamation"></i>
+                <div class="bg-destructive/10 text-destructive p-3 sm:p-4 rounded-xl mb-6 sm:mb-8 text-xs sm:text-sm border border-destructive/20 flex items-center gap-3">
+                    <i class="fa-solid fa-circle-exclamation shrink-0"></i>
                     <span>{{ session('error') }}</span>
                 </div>
             @endif
 
-            <form action="{{ route('login.post') }}" method="POST" class="space-y-6">
+            <form action="{{ route('login.post') }}" method="POST" class="space-y-5 sm:space-y-6">
                 @csrf
                 <div class="space-y-2">
-                    <label class="text-sm font-semibold tracking-tight text-foreground/80 ml-1" for="email">Email address</label>
+                    <label class="text-xs sm:text-sm font-semibold tracking-tight text-foreground/80 ml-1" for="email">Email address</label>
                     <div class="relative">
-                        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-muted-foreground">
-                            <i class="fa-solid fa-envelope"></i>
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-muted-foreground pointer-events-none">
+                            <i class="fa-solid fa-envelope text-sm"></i>
                         </span>
-                        <input class="flex h-12 w-full rounded-xl border border-input bg-background pl-10 pr-4 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition-all duration-200 hover:border-foreground/20" type="email" name="email" id="email" required placeholder="admin@gmail.com" value="">
+                        <input class="flex h-11 sm:h-12 w-full rounded-xl border border-input bg-background/90 lg:bg-background pl-10 pr-4 py-2 text-sm ring-offset-background placeholder:text-muted-foreground/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 transition-all duration-200 hover:border-foreground/20" type="email" name="email" id="email" required placeholder="you@example.com" value="{{ old('email') }}" autocomplete="email">
                     </div>
                     @error('email') <span class="text-destructive text-xs mt-1 block ml-1">{{ $message }}</span> @enderror
                 </div>
-                
+
                 <div class="space-y-2">
                     <div class="flex items-center justify-between ml-1">
-                        <label class="text-sm font-semibold tracking-tight text-foreground/80" for="password">Password</label>
-                        <a href="#" class="text-xs font-medium text-primary hover:underline underline-offset-4 transition-all">Forgot password?</a>
+                        <label class="text-xs sm:text-sm font-semibold tracking-tight text-foreground/80" for="password">Password</label>
+                        <a href="#" class="text-[10px] sm:text-xs font-medium text-primary hover:underline underline-offset-4">Forgot password?</a>
                     </div>
                     <div class="relative">
-                        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-muted-foreground">
-                            <i class="fa-solid fa-lock"></i>
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-muted-foreground pointer-events-none">
+                            <i class="fa-solid fa-lock text-sm"></i>
                         </span>
-                        <input class="flex h-12 w-full rounded-xl border border-input bg-background pl-10 pr-4 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition-all duration-200 hover:border-foreground/20" type="password" name="password" id="password" required placeholder="••••••••" value="">
+                        <input class="flex h-11 sm:h-12 w-full rounded-xl border border-input bg-background/90 lg:bg-background pl-10 pr-12 py-2 text-sm ring-offset-background placeholder:text-muted-foreground/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 transition-all duration-200 hover:border-foreground/20" type="password" name="password" id="password" required placeholder="••••••••" autocomplete="current-password">
+                        <button type="button" class="password-toggle absolute inset-y-0 right-0 flex items-center pr-3 sm:pr-4 text-muted-foreground hover:text-foreground transition-colors" data-target="password" aria-label="Show password" aria-pressed="false">
+                            <i class="fa-regular fa-eye text-base" aria-hidden="true"></i>
+                        </button>
                     </div>
                     @error('password') <span class="text-destructive text-xs mt-1 block ml-1">{{ $message }}</span> @enderror
                 </div>
 
                 <div class="flex items-center space-x-3 ml-1">
                     <div class="relative flex items-center">
-                        <input type="checkbox" id="remember" class="peer h-5 w-5 cursor-pointer appearance-none rounded-md border border-input transition-all checked:bg-primary checked:border-primary">
-                        <i class="fa-solid fa-check absolute text-[10px] text-primary-foreground opacity-0 peer-checked:opacity-100 top-1.5 left-1 pointer-events-none"></i>
+                        <input type="checkbox" id="remember" class="peer h-4 w-4 sm:h-5 sm:w-5 cursor-pointer appearance-none rounded-md border border-input transition-all checked:bg-primary checked:border-primary">
+                        <i class="fa-solid fa-check absolute text-[9px] sm:text-[10px] text-primary-foreground opacity-0 peer-checked:opacity-100 top-1 left-1 sm:top-1.5 sm:left-1 pointer-events-none"></i>
                     </div>
-                    <label for="remember" class="text-sm font-medium leading-none cursor-pointer peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-foreground/70">Keep me logged in</label>
+                    <label for="remember" class="text-xs sm:text-sm font-medium text-foreground/70 cursor-pointer">Keep me logged in</label>
                 </div>
-                
-                <div class="pt-2">
-                    <button class="inline-flex items-center justify-center rounded-xl text-sm font-bold ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 hover:scale-[1.02] active:scale-[0.98] h-12 px-8 py-2 w-full shadow-lg shadow-primary/20" type="submit">
-                        Sign In
-                    </button>
-                </div>
+
+                <button class="inline-flex items-center justify-center rounded-xl text-sm font-bold h-11 sm:h-12 w-full bg-primary text-primary-foreground hover:bg-primary/90 hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-primary/20 transition-all" type="submit">
+                    Sign In
+                </button>
             </form>
 
-            <div class="mt-8 flex items-center justify-center space-x-4">
-                <div class="h-px flex-1 bg-border/60"></div>
-                <span class="text-xs font-medium text-muted-foreground uppercase tracking-widest">Or continue with</span>
-                <div class="h-px flex-1 bg-border/60"></div>
-            </div>
+            @include('partials.social-login', ['dividerText' => 'Or continue with'])
 
-            <div class="mt-8 grid grid-cols-2 gap-4">
-                <button class="flex items-center justify-center gap-2 h-11 rounded-xl border border-input bg-background hover:bg-accent transition-colors text-sm font-medium">
-                    <i class="fa-brands fa-google"></i> Google
-                </button>
-                <button class="flex items-center justify-center gap-2 h-11 rounded-xl border border-input bg-background hover:bg-accent transition-colors text-sm font-medium">
-                    <i class="fa-brands fa-github"></i> GitHub
-                </button>
-            </div>
-
-            <!-- Admin Hint -->
-            <div class="mt-8 p-4 bg-primary/5 border border-primary/10 rounded-2xl">
-                <div class="flex items-center space-x-3 mb-2">
-                    <i class="fa-solid fa-shield-halved text-primary text-sm"></i>
-                    <span class="text-xs font-bold uppercase tracking-widest text-primary">Admin Access</span>
-                </div>
-                <p class="text-[11px] text-muted-foreground leading-relaxed">
-                    Use <span class="font-bold text-foreground">admin@gmail.com</span> / <span class="font-bold text-foreground">admin123</span> to view all system usage data.
-                </p>
-            </div>
-
-            <p class="mt-10 text-center text-sm text-muted-foreground">
-                New to smart-usage? <a href="{{ route('signup') }}" class="font-bold text-foreground hover:text-primary transition-colors underline-offset-4 hover:underline">Create an account</a>
+            <p class="mt-8 sm:mt-10 text-center text-xs sm:text-sm text-muted-foreground pb-2">
+                New to smart-usage? <a href="{{ route('signup') }}" class="font-bold text-foreground hover:text-primary underline-offset-4 hover:underline">Create an account</a>
             </p>
         </div>
-        
-        <footer class="absolute bottom-10 left-10 right-10 flex justify-between text-[11px] font-medium text-muted-foreground uppercase tracking-wider">
+
+        <footer class="w-full max-w-[400px] mt-8 pt-4 border-t border-border/40 lg:border-0 flex flex-col xs:flex-row justify-between gap-2 text-[10px] sm:text-[11px] font-medium text-muted-foreground uppercase tracking-wider">
             <span>&copy; 2026 Smart-Usage Inc.</span>
-            <div class="flex space-x-4">
+            <div class="flex gap-4">
                 <a href="#" class="hover:text-foreground">Privacy</a>
                 <a href="#" class="hover:text-foreground">Terms</a>
             </div>
         </footer>
     </div>
 
-    <!-- Right Side: Immersive Visual Section -->
-    <div class="hidden md:block md:w-1/2 relative overflow-hidden bg-muted">
+    {{-- Desktop: hero image --}}
+    <div class="hidden lg:block lg:w-1/2 relative overflow-hidden bg-muted min-h-[100dvh]">
         <div class="absolute inset-0 z-10 bg-gradient-to-br from-primary/20 via-transparent to-black/60"></div>
-        <img 
-            src="{{ asset('images/login-bg.png') }}" 
-            alt="Sustainable Tech background" 
-            class="absolute inset-0 h-full w-full object-cover scale-105 hover:scale-100 transition-transform duration-[10s] ease-out"
-        />
-        
-        <!-- Floating Elements for depth -->
+        <img src="{{ asset('images/login-bg.png') }}" alt="Sustainable technology" class="absolute inset-0 h-full w-full object-cover scale-105 hover:scale-100 transition-transform duration-[10s] ease-out">
         <div class="absolute top-20 right-20 w-32 h-32 bg-primary/30 rounded-full blur-3xl animate-pulse"></div>
-        <div class="absolute bottom-40 -left-10 w-48 h-48 bg-secondary/20 rounded-full blur-3xl animate-pulse delay-700"></div>
+        <div class="absolute bottom-40 -left-10 w-48 h-48 bg-secondary/20 rounded-full blur-3xl animate-pulse"></div>
+        <div class="absolute bottom-16 left-12 right-12 z-20 hidden xl:block">
+            <h2 class="text-4xl font-extrabold text-white mb-4 leading-tight">Track water &amp; electricity with clarity.</h2>
+            <p class="text-lg text-white/80 max-w-md">Monitor consumption, spot trends, and build smarter habits.</p>
+        </div>
     </div>
+
+    @include('partials.auth-scripts')
 </body>
 </html>

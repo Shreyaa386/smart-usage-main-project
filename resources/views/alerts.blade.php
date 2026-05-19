@@ -3,14 +3,15 @@
 @section('header', 'System Alerts')
 
 @section('content')
-<div class="max-w-4xl mx-auto space-y-6">
-    <div class="bg-card border border-border/60 rounded-3xl shadow-lg p-8 transition-all duration-300">
-        <div class="flex justify-between items-center mb-10">
+@include('partials.page-background', ['bgImage' => 'images/warning-alerts.jpg', 'bgAlt' => 'Alerts'])
+<div class="max-w-4xl mx-auto space-y-4 md:space-y-6">
+    <div class="bg-card border border-border/60 rounded-2xl md:rounded-3xl shadow-md p-4 sm:p-6 md:p-8 transition-all duration-300">
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 md:mb-10 gap-3">
             <div>
-                <h3 class="text-2xl font-extrabold tracking-tight">Consumption Alerts</h3>
-                <p class="text-sm text-muted-foreground mt-2">Triggered for readings exceeding 100 units of consumption.</p>
+                <h3 class="text-xl md:text-2xl font-extrabold tracking-tight">Consumption Alerts</h3>
+                <p class="text-xs md:text-sm text-muted-foreground mt-2">Triggered for readings exceeding 100 units of consumption.</p>
             </div>
-            <div class="px-5 py-2 bg-destructive/5 border border-destructive/10 rounded-xl text-destructive text-xs font-bold tracking-widest uppercase">
+            <div class="px-4 md:px-5 py-1.5 md:py-2 bg-destructive/5 border border-destructive/10 rounded-xl text-destructive text-xs font-bold tracking-widest uppercase">
                 {{ $highUsages->count() }} Alert(s)
             </div>
         </div>
@@ -24,14 +25,14 @@
                     $textClass = $isCritical ? 'text-destructive' : 'text-amber-600 dark:text-amber-400';
                     $icon = $isCritical ? 'fa-triangle-exclamation' : 'fa-circle-exclamation';
                 @endphp
-                <div class="{{ $bgClass }} border {{ $borderClass }} p-6 rounded-2xl shadow-sm transition-all duration-200 group hover:scale-[1.01]">
+                <div class="{{ $bgClass }} border {{ $borderClass }} p-4 md:p-6 rounded-xl md:rounded-2xl shadow-sm transition-all duration-200 group hover:scale-[1.01]">
                     <div class="flex items-start">
-                        <div class="flex-shrink-0 w-12 h-12 rounded-xl {{ $isCritical ? 'bg-destructive/10' : 'bg-amber-500/10' }} flex items-center justify-center">
-                            <i class="fa-solid {{ $icon }} {{ $textClass }} text-xl"></i>
+                        <div class="flex-shrink-0 w-10 h-10 md:w-12 md:h-12 rounded-xl {{ $isCritical ? 'bg-destructive/10' : 'bg-amber-500/10' }} flex items-center justify-center">
+                            <i class="fa-solid {{ $icon }} {{ $textClass }} text-lg md:text-xl"></i>
                         </div>
-                        <div class="ml-6 flex-1">
-                            <div class="flex justify-between items-center mb-1">
-                                <h4 class="text-base font-extrabold {{ $textClass }} tracking-tight">
+                        <div class="ml-4 md:ml-6 flex-1 min-w-0">
+                            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-1 gap-1">
+                                <h4 class="text-sm md:text-base font-extrabold {{ $textClass }} tracking-tight">
                                     {{ ucfirst($alert->type) }} {{ $isCritical ? 'Critical Threshold' : 'Warning' }}
                                 </h4>
                                 <span class="text-[10px] text-muted-foreground font-bold tracking-widest uppercase">{{ $alert->created_at->diffForHumans() }}</span>

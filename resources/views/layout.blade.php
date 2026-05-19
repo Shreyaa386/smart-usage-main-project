@@ -2,7 +2,7 @@
 <html lang="en" class="light">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>smart-usage</title>
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -135,16 +135,24 @@
       }
     </script>
 </head>
-<body class="flex h-screen overflow-hidden antialiased font-sans bg-background selection:bg-primary/10 selection:text-primary">
-    <!-- Premium Sidebar -->
-    <aside class="w-64 bg-card border-r border-border shadow-sm flex mb-0 flex-col transition-all duration-300 z-30">
-        <div class="h-16 flex items-center px-6 border-b border-border">
+<body class="flex min-h-screen min-h-[100dvh] h-screen overflow-hidden antialiased font-sans bg-background text-sm sm:text-base selection:bg-primary/10 selection:text-primary">
+    
+    <!-- Mobile / tablet sidebar overlay -->
+    <div id="sidebar-overlay" class="fixed inset-0 bg-black/50 z-40 hidden lg:hidden transition-opacity" onclick="toggleSidebar()"></div>
+
+    <!-- Sidebar: drawer on phone & tablet, fixed on desktop -->
+    <aside id="sidebar" class="fixed lg:relative w-[min(280px,85vw)] sm:w-64 bg-card border-r border-border shadow-sm flex flex-col transition-transform duration-300 z-50 h-full -translate-x-full lg:translate-x-0">
+        <div class="h-14 sm:h-16 flex items-center justify-between px-4 sm:px-6 border-b border-border">
             <div class="flex items-center space-x-3 group cursor-pointer">
                 <div class="w-8 h-8 bg-primary flex items-center justify-center rounded-lg rotate-3 group-hover:rotate-0 transition-transform duration-300">
                     <i class="fa-solid fa-leaf text-primary-foreground text-sm"></i>
                 </div>
                 <span class="text-xl font-bold tracking-tight text-foreground">smart-usage</span>
             </div>
+            <!-- Close button for mobile -->
+            <button onclick="toggleSidebar()" class="lg:hidden text-muted-foreground hover:text-foreground p-1 rounded-lg hover:bg-accent transition-all" aria-label="Close menu">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
         </div>
         
         <nav class="flex-1 p-4 space-y-1 overflow-y-auto">
@@ -193,7 +201,7 @@
         </nav>
 
         <div class="p-4 border-t border-border">
-            <div class="bg-muted/50 rounded-2xl p-4 mb-4">
+            <div class="bg-muted/50 rounded-2xl p-4 mb-4 hidden lg:block">
                 <p class="text-xs font-semibold text-foreground/80 mb-1">Eco Tip</p>
                 <p class="text-[10px] text-muted-foreground leading-relaxed">Lowering your thermostat by 1°C can save up to 10% on your energy bill.</p>
             </div>
@@ -208,45 +216,49 @@
     </aside>
 
     <!-- Main Content Area -->
-    <main class="flex-1 flex flex-col h-screen overflow-hidden relative">
+    <main class="flex-1 flex flex-col h-screen overflow-hidden relative w-full">
         <!-- Background Decoration -->
-        <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[120px] -z-10 -mr-64 -mt-64"></div>
-        <div class="absolute bottom-0 left-0 w-[400px] h-[400px] bg-secondary/5 rounded-full blur-[100px] -z-10 -ml-48 -mb-48"></div>
+        <div class="absolute top-0 right-0 w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-primary/5 rounded-full blur-[120px] -z-10 -mr-32 md:-mr-64 -mt-32 md:-mt-64"></div>
+        <div class="absolute bottom-0 left-0 w-[200px] md:w-[400px] h-[200px] md:h-[400px] bg-secondary/5 rounded-full blur-[100px] -z-10 -ml-24 md:-ml-48 -mb-24 md:-mb-48"></div>
 
         <!-- Top Navbar -->
-        <header class="h-16 bg-card/80 backdrop-blur-md flex items-center justify-between px-8 border-b border-border z-20 sticky top-0 transition-colors">
-            <div class="flex items-center space-x-4">
-                <h2 class="text-lg font-bold tracking-tight text-foreground">@yield('header')</h2>
+        <header class="h-14 md:h-16 bg-card/95 backdrop-blur-md flex items-center justify-between px-4 md:px-8 border-b border-border z-20 sticky top-0 transition-colors shadow-sm">
+            <div class="flex items-center space-x-3 md:space-x-4">
+                <!-- Hamburger Menu Button (Mobile Only) -->
+                <button onclick="toggleSidebar()" class="lg:hidden text-muted-foreground hover:text-foreground p-2 rounded-xl hover:bg-accent transition-all focus:outline-none active:scale-95" aria-label="Open menu">
+                    <i class="fa-solid fa-bars text-lg"></i>
+                </button>
+                <h2 class="text-sm sm:text-base md:text-lg font-bold tracking-tight text-foreground truncate max-w-[50vw] sm:max-w-none">@yield('header')</h2>
             </div>
             
-            <div class="flex items-center space-x-6">
-                <button onclick="toggleDarkMode()" class="text-muted-foreground hover:text-foreground p-2.5 rounded-xl hover:bg-accent transition-all focus:outline-none active:scale-95">
-                    <i class="fa-solid fa-cloud-moon text-lg"></i>
+            <div class="flex items-center space-x-3 md:space-x-6">
+                <button onclick="toggleDarkMode()" class="text-muted-foreground hover:text-foreground p-2 md:p-2.5 rounded-xl hover:bg-accent transition-all focus:outline-none active:scale-95">
+                    <i class="fa-solid fa-cloud-moon text-base md:text-lg"></i>
                 </button>
                 
-                <div class="h-8 w-px bg-border/60 mx-2"></div>
+                <div class="h-8 w-px bg-border/60 mx-1 md:mx-2 hidden sm:block"></div>
                 
-                <a href="{{ route('profile') }}" class="flex items-center space-x-3 group transition-all">
+                <a href="{{ route('profile') }}" class="flex items-center space-x-2 md:space-x-3 group transition-all">
                     <div class="text-right hidden sm:block">
-                        <p class="text-sm font-bold text-foreground leading-none mb-1 group-hover:text-primary transition-colors">{{ Auth::check() ? Auth::user()->name : 'Guest' }}</p>
-                        <p class="text-[10px] font-medium text-muted-foreground uppercase tracking-wider">Premium User</p>
+                        <p class="text-xs md:text-sm font-bold text-foreground leading-none mb-1 group-hover:text-primary transition-colors">{{ Auth::check() ? Auth::user()->name : 'Guest' }}</p>
+                        <p class="text-[9px] md:text-[10px] font-medium text-muted-foreground uppercase tracking-wider">Premium User</p>
                     </div>
-                    <div class="h-10 w-10 bg-primary/10 rounded-xl flex items-center justify-center border border-primary/20 group-hover:border-primary group-hover:bg-primary transition-all duration-300">
-                        <i class="fa-solid fa-user text-primary group-hover:text-primary-foreground"></i>
+                    <div class="h-9 w-9 md:h-10 md:w-10 bg-primary/10 rounded-xl flex items-center justify-center border border-primary/20 group-hover:border-primary group-hover:bg-primary transition-all duration-300">
+                        <i class="fa-solid fa-user text-primary group-hover:text-primary-foreground text-sm md:text-base"></i>
                     </div>
                 </a>
             </div>
         </header>
 
         <!-- Content Body -->
-        <div class="flex-1 overflow-auto p-6 transition-colors">
+        <div class="relative z-10 flex-1 overflow-auto p-4 md:p-6 transition-colors">
             @if(session('success'))
-                <div class="p-4 mb-4 text-sm text-green-800 rounded-md bg-green-50 dark:bg-green-900/20 dark:text-green-400 border border-green-200 dark:border-green-800" role="alert">
+                <div class="p-3 md:p-4 mb-4 text-xs md:text-sm text-green-800 rounded-md bg-green-50 dark:bg-green-900/20 dark:text-green-400 border border-green-200 dark:border-green-800" role="alert">
                   {{ session('success') }}
                 </div>
             @endif
             @if(session('error'))
-                <div class="p-4 mb-4 text-sm text-red-800 rounded-md bg-red-50 dark:bg-red-900/20 dark:text-red-400 border border-red-200 dark:border-red-800" role="alert">
+                <div class="p-3 md:p-4 mb-4 text-xs md:text-sm text-red-800 rounded-md bg-red-50 dark:bg-red-900/20 dark:text-red-400 border border-red-200 dark:border-red-800" role="alert">
                   {{ session('error') }}
                 </div>
             @endif
@@ -254,6 +266,34 @@
         </div>
     </main>
     
+    <!-- Sidebar Toggle Script -->
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebar-overlay');
+            
+            sidebar.classList.toggle('-translate-x-full');
+            overlay.classList.toggle('hidden');
+            
+            // Prevent body scroll when sidebar is open on mobile
+            if (!sidebar.classList.contains('-translate-x-full')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = '';
+            }
+        }
+
+        // Close sidebar on window resize to desktop (lg breakpoint)
+        window.addEventListener('resize', function() {
+            if (window.innerWidth >= 1024) {
+                const sidebar = document.getElementById('sidebar');
+                const overlay = document.getElementById('sidebar-overlay');
+                overlay.classList.add('hidden');
+                document.body.style.overflow = '';
+            }
+        });
+    </script>
+
     @stack('scripts')
 </body>
 </html>
