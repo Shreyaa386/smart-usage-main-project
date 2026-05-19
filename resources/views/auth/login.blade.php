@@ -22,7 +22,7 @@
             </a>
 
             <div class="mb-6 sm:mb-8 md:mb-10">
-                <h1 class="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-foreground mb-1.5 sm:mb-2 md:mb-3">Welcome back</h1>
+                <h1 class="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-foreground mb-1.5 sm:mb-2 md:mb-3">Welcome</h1>
                 <p class="text-muted-foreground text-sm sm:text-base leading-relaxed">Enter your details below to access your workspace.</p>
             </div>
 
