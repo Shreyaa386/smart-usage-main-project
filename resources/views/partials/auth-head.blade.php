@@ -1,3 +1,47 @@
+<script>
+  (function() {
+    const themeColor = localStorage.getItem('su-accent-color') || 'blue';
+    const fontSize = localStorage.getItem('su-font-size') || '16';
+    
+    const colors = {
+      green: { light: '142.5 76.2% 36.3%', dark: '142.5 70.6% 45.3%' },
+      blue: { light: '221.2 83.2% 53.3%', dark: '217.2 91.2% 59.8%' },
+      amber: { light: '37.7 92.1% 50.2%', dark: '37.7 90.1% 55.2%' },
+      orange: { light: '24.6 95% 53.1%', dark: '24.6 90% 58.1%' },
+      purple: { light: '271.5 81.3% 55.9%', dark: '271.5 85% 65%' },
+      rose: { light: '346.8 77.2% 49.8%', dark: '346.8 80% 55.8%' }
+    };
+    
+    const selected = colors[themeColor] || colors.blue;
+    
+    const style = document.createElement('style');
+    style.id = 'su-dynamic-variables-auth';
+    style.innerHTML = `
+      :root {
+        --primary: ${selected.light} !important;
+        --ring: ${selected.light} !important;
+      }
+      .dark {
+        --primary: ${selected.dark} !important;
+        --ring: ${selected.dark} !important;
+      }
+      html {
+        font-size: calc(${fontSize}px - 2px) !important;
+      }
+      @media (min-width: 640px) {
+        html {
+          font-size: calc(${fontSize}px - 1px) !important;
+        }
+      }
+      @media (min-width: 1024px) {
+        html {
+          font-size: ${fontSize}px !important;
+        }
+      }
+    `;
+    document.head.appendChild(style);
+  })();
+</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>{{ $title ?? 'smart-usage' }}</title>

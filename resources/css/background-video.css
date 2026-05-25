@@ -1,0 +1,23 @@
+/* background-video.css */
+/* Full-screen background video styling */
+#bg-video {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -20; /* behind overlay and content */
+    pointer-events: none; /* clicks pass through */
+}
+/* Dark overlay for readability */
+.bg-video-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.3);
+    z-index: -10;
+}
+/* Ensure main content appears above video */
+main, #sidebar, #customizer-drawer, header, .glass, .bg-card {
+    position: relative;
+    z-index: 20;
+}
