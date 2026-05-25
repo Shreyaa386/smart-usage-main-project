@@ -3,7 +3,7 @@
 @section('header', 'System Analytics')
 
 @section('content')
-@include('partials.page-background', ['bgImage' => 'images/analytics-data-charts.avif', 'bgAlt' => 'Analytics'])
+@include('partials.page-background', ['bgVideo' => 'videos/analytics.mp4'])
 <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8 mb-6 md:mb-8">
     <div class="md:col-span-2 bg-card border border-border/60 rounded-2xl md:rounded-3xl shadow-md p-4 sm:p-6 md:p-8 transition-all duration-300">
         <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 md:mb-8 gap-3">

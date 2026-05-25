@@ -3,7 +3,30 @@
 @section('header', 'System Dashboard')
 
 @section('content')
-@include('partials.page-background', ['bgImage' => 'images/water-electricity theme.avif', 'bgAlt' => 'Dashboard'])
+@include('partials.page-background', ['bgVideo' => 'videos/dashboard.mp4'])
+
+@if($exceedsWaterLimit || $exceedsElectricityLimit)
+<div class="mb-4 md:mb-6 bg-destructive/10 border border-destructive/20 rounded-xl p-3 md:p-4">
+    <div class="flex items-start space-x-3">
+        <div class="flex-shrink-0">
+            <i class="fa-solid fa-triangle-exclamation text-destructive text-lg md:text-xl"></i>
+        </div>
+        <div class="flex-1">
+            <h4 class="text-sm md:text-base font-bold text-destructive mb-1">Usage Limit Exceeded!</h4>
+            <p class="text-xs md:text-sm text-destructive/80">
+                @if($exceedsWaterLimit)
+                    Water usage ({{ number_format($todayWater, 2) }}L) exceeds your limit ({{ number_format($waterLimit, 2) }}L).
+                @endif
+                @if($exceedsElectricityLimit)
+                    @if($exceedsWaterLimit) | @endif
+                    Electricity usage ({{ number_format($todayElectricity, 2) }}kWh) exceeds your limit ({{ number_format($electricityLimit, 2) }}kWh).
+                @endif
+            </p>
+        </div>
+    </div>
+</div>
+@endif
+
 <div class="mb-4 md:mb-6 flex space-x-2 overflow-x-auto bg-card rounded-xl px-2 py-2 shadow-sm border border-border/60">
     <a href="{{ route('dashboard', ['period' => 'day']) }}" class="px-3 md:px-4 py-1.5 md:py-2 text-xs md:text-sm font-medium rounded-md transition-colors whitespace-nowrap {{ (isset($period) && $period === 'day') ? 'bg-primary text-primary-foreground shadow-sm' : 'text-muted-foreground hover:bg-muted/50' }}">Today</a>
     <a href="{{ route('dashboard', ['period' => 'month']) }}" class="px-3 md:px-4 py-1.5 md:py-2 text-xs md:text-sm font-medium rounded-md transition-colors whitespace-nowrap {{ (isset($period) && $period === 'month') ? 'bg-primary text-primary-foreground shadow-sm' : 'text-muted-foreground hover:bg-muted/50' }}">This Month</a>

@@ -184,6 +184,11 @@
                 <i class="fa-solid fa-bell w-5 group-hover:scale-110 transition-transform"></i> 
                 <span class="text-sm">Alerts</span>
             </a>
+            
+            <a href="{{ route('tips') }}" class="flex items-center space-x-3 px-3 py-2.5 rounded-xl transition-all duration-200 group {{ request()->routeIs('tips') ? 'bg-primary text-primary-foreground shadow-md shadow-primary/20 font-semibold' : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground' }}">
+                <i class="fa-solid fa-lightbulb w-5 group-hover:scale-110 transition-transform"></i> 
+                <span class="text-sm">Tips</span>
+            </a>
 
             @if(Auth::check() && Auth::user()->email === 'admin@gmail.com')
             <div class="pt-6 px-3 mb-2">

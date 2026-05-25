@@ -48,6 +48,9 @@ Route::middleware('auth')->group(function () {
     
     Route::get('/analytics', [UsageController::class, 'analytics'])->name('analytics');
     Route::get('/alerts', [UsageController::class, 'alerts'])->name('alerts');
+    Route::get('/tips', function () {
+        return view('tips');
+    })->name('tips');
 
     // Admin
     Route::post('/admin/clear-cache', [AuthController::class, 'clearCache'])->name('admin.clear-cache');

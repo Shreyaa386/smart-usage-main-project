@@ -3,7 +3,7 @@
 @section('header', 'Add New Usage Record')
 
 @section('content')
-@include('partials.page-background', ['bgImage' => 'images/water-electricity-meter.jpg', 'bgAlt' => 'Add usage'])
+@include('partials.page-background', ['bgVideo' => 'videos/add-usage.mp4'])
 <div class="max-w-xl mx-auto bg-card border border-border/60 rounded-2xl md:rounded-3xl shadow-md p-5 sm:p-8 md:p-10 transition-all duration-300">
     <div class="mb-6 md:mb-8">
         <h3 class="text-xl md:text-2xl font-extrabold text-foreground tracking-tight">Log Consumption</h3>

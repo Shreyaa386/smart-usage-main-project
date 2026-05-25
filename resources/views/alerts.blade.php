@@ -3,13 +3,13 @@
 @section('header', 'System Alerts')
 
 @section('content')
-@include('partials.page-background', ['bgImage' => 'images/warning-alerts.jpg', 'bgAlt' => 'Alerts'])
+@include('partials.page-background', ['bgVideo' => 'videos/alerts.mp4'])
 <div class="max-w-4xl mx-auto space-y-4 md:space-y-6">
     <div class="bg-card border border-border/60 rounded-2xl md:rounded-3xl shadow-md p-4 sm:p-6 md:p-8 transition-all duration-300">
         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 md:mb-10 gap-3">
             <div>
                 <h3 class="text-xl md:text-2xl font-extrabold tracking-tight">Consumption Alerts</h3>
-                <p class="text-xs md:text-sm text-muted-foreground mt-2">Triggered for readings exceeding 100 units of consumption.</p>
+                <p class="text-xs md:text-sm text-muted-foreground mt-2">Triggered for readings exceeding your custom limits (Water: {{ number_format($waterLimit, 2) }}L, Electricity: {{ number_format($electricityLimit, 2) }}kWh).</p>
             </div>
             <div class="px-4 md:px-5 py-1.5 md:py-2 bg-destructive/5 border border-destructive/10 rounded-xl text-destructive text-xs font-bold tracking-widest uppercase">
                 {{ $highUsages->count() }} Alert(s)

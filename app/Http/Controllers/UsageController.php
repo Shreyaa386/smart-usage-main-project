@@ -80,6 +80,13 @@ class UsageController extends Controller
         $highestDevice = $deviceUsage->sortByDesc('total_usage')->first();
         $suggestions = $this->getSuggestions($totalWater, $totalElectricity, $highestDevice);
         
+        // Check if today's usage exceeds limits for notification
+        $user = Auth::user();
+        $waterLimit = $user->water_limit ?? 100;
+        $electricityLimit = $user->electricity_limit ?? 100;
+        $exceedsWaterLimit = $todayWater > $waterLimit;
+        $exceedsElectricityLimit = $todayElectricity > $electricityLimit;
+        
         // Add percentage calculation
         foreach ($deviceUsage as $device) {
             if ($device->type === 'water' && $totalWater > 0) {
@@ -95,7 +102,8 @@ class UsageController extends Controller
             'totalWater', 'totalElectricity', 
             'todayWater', 'yesterdayWater', 
             'todayElectricity', 'yesterdayElectricity',
-            'recentUsages', 'deviceUsage', 'period', 'suggestions', 'highestDevice'
+            'recentUsages', 'deviceUsage', 'period', 'suggestions', 'highestDevice',
+            'waterLimit', 'electricityLimit', 'exceedsWaterLimit', 'exceedsElectricityLimit'
         ));
     }
 
@@ -159,18 +167,35 @@ class UsageController extends Controller
 
     public function alerts()
     {
-        $highUsages = $this->baseQuery()->where('usage', '>', 100)->orderBy('created_at', 'desc')->get();
-        return view('alerts', compact('highUsages'));
+        $user = Auth::user();
+        $waterLimit = $user->water_limit ?? 100;
+        $electricityLimit = $user->electricity_limit ?? 100;
+        
+        $highUsages = $this->baseQuery()
+            ->where(function($query) use ($waterLimit, $electricityLimit) {
+                $query->where(function($q) use ($waterLimit) {
+                    $q->where('type', 'water')->where('usage', '>', $waterLimit);
+                })->orWhere(function($q) use ($electricityLimit) {
+                    $q->where('type', 'electricity')->where('usage', '>', $electricityLimit);
+                });
+            })
+            ->orderBy('created_at', 'desc')
+            ->get();
+            
+        return view('alerts', compact('highUsages', 'waterLimit', 'electricityLimit'));
     }
 
     private function getSuggestions($totalWater, $totalElectricity, $highestDevice)
     {
         $suggestions = [];
+        $user = Auth::user();
+        $waterLimit = $user->water_limit ?? 100;
+        $electricityLimit = $user->electricity_limit ?? 100;
 
-        if ($totalWater > 100) {
+        if ($totalWater > $waterLimit) {
             $suggestions[] = [
                 'type' => 'water',
-                'message' => 'Water usage is high. Try reducing wastage.',
+                'message' => "Water usage ({$totalWater}L) exceeds your limit ({$waterLimit}L). Try reducing wastage.",
                 'icon' => 'fa-solid fa-droplet',
                 'color' => 'text-water',
                 'bg' => 'bg-water/10',
@@ -178,10 +203,10 @@ class UsageController extends Controller
             ];
         }
 
-        if ($totalElectricity > 50) {
+        if ($totalElectricity > $electricityLimit) {
             $suggestions[] = [
                 'type' => 'electricity',
-                'message' => 'Electricity usage is high. Turn off unused devices.',
+                'message' => "Electricity usage ({$totalElectricity}kWh) exceeds your limit ({$electricityLimit}kWh). Turn off unused devices.",
                 'icon' => 'fa-solid fa-bolt',
                 'color' => 'text-electricity',
                 'bg' => 'bg-electricity/10',

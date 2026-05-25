@@ -3,7 +3,7 @@
 @section('header', 'Usage History')
 
 @section('content')
-@include('partials.page-background', ['bgImage' => 'images/data charts.avif', 'bgAlt' => 'History'])
+@include('partials.page-background', ['bgVideo' => 'videos/history.mp4'])
 <div class="mb-6 md:mb-8 flex space-x-2 bg-muted/30 p-1.5 rounded-2xl w-full md:w-fit border border-border/40 overflow-x-auto">
     <a href="{{ route('history', ['period' => 'day']) }}" class="px-4 md:px-6 py-1.5 md:py-2 text-xs font-bold rounded-xl transition-all whitespace-nowrap {{ (isset($period) && $period === 'day') ? 'bg-primary text-primary-foreground shadow-lg shadow-primary/20' : 'text-muted-foreground hover:text-foreground hover:bg-muted/50' }}">Today</a>
     <a href="{{ route('history', ['period' => 'month']) }}" class="px-4 md:px-6 py-1.5 md:py-2 text-xs font-bold rounded-xl transition-all whitespace-nowrap {{ (isset($period) && $period === 'month') ? 'bg-primary text-primary-foreground shadow-lg shadow-primary/20' : 'text-muted-foreground hover:text-foreground hover:bg-muted/50' }}">Month</a>
