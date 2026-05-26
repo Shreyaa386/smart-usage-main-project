@@ -19,7 +19,8 @@
         <div class="space-y-4">
             @forelse($highUsages as $alert)
                 @php
-                    $isCritical = $alert->usage > 200;
+                    $limit = $alert->type === 'water' ? $waterLimit : $electricityLimit;
+                    $isCritical = $alert->usage > $limit;
                     $bgClass = $isCritical ? 'bg-destructive/5' : 'bg-amber-50 dark:bg-amber-900/5';
                     $borderClass = $isCritical ? 'border-destructive/20' : 'border-amber-500/20';
                     $textClass = $isCritical ? 'text-destructive' : 'text-amber-600 dark:text-amber-400';
@@ -33,7 +34,13 @@
                         <div class="ml-4 md:ml-6 flex-1 min-w-0">
                             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-1 gap-1">
                                 <h4 class="text-sm md:text-base font-extrabold {{ $textClass }} tracking-tight">
-                                    {{ ucfirst($alert->type) }} {{ $isCritical ? 'Critical Threshold' : 'Warning' }}
+                                    @if($alert->type == 'water')
+                                    Water usage exceeded {{ $waterLimit }}L limit
+                                @elseif($alert->type == 'electricity')
+                                    Electricity usage exceeded {{ $electricityLimit }} kWh limit
+                                @else
+                                    Usage exceeded limit
+                                @endif
                                 </h4>
                                 <span class="text-[10px] text-muted-foreground font-bold tracking-widest uppercase">{{ $alert->created_at->diffForHumans() }}</span>
                             </div>

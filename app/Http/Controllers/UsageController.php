@@ -82,8 +82,8 @@ class UsageController extends Controller
         
         // Check if today's usage exceeds limits for notification
         $user = Auth::user();
-        $waterLimit = $user->water_limit ?? 100;
-        $electricityLimit = $user->electricity_limit ?? 100;
+        $waterLimit = $user->water_limit ?? 500;
+        $electricityLimit = $user->electricity_limit ?? 10;
         $exceedsWaterLimit = $todayWater > $waterLimit;
         $exceedsElectricityLimit = $todayElectricity > $electricityLimit;
         
@@ -168,15 +168,15 @@ class UsageController extends Controller
     public function alerts()
     {
         $user = Auth::user();
-        $waterLimit = $user->water_limit ?? 100;
-        $electricityLimit = $user->electricity_limit ?? 100;
+        $waterLimit = $user->water_limit ?? 500; // Updated default water limit
+        $electricityLimit = $user->electricity_limit ?? 10; // Updated default electricity limit
         
         $highUsages = $this->baseQuery()
             ->where(function($query) use ($waterLimit, $electricityLimit) {
                 $query->where(function($q) use ($waterLimit) {
                     $q->where('type', 'water')->where('usage', '>', $waterLimit);
                 })->orWhere(function($q) use ($electricityLimit) {
-                    $q->where('type', 'electricity')->where('usage', '>', $electricityLimit);
+                    $q->whereIn('type', ['electricity', 'Electricity'])->where('usage', '>', $electricityLimit);
                 });
             })
             ->orderBy('created_at', 'desc')

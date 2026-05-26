@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->decimal('water_limit', 10, 2)->default(100)->after('remember_token');
-            $table->decimal('electricity_limit', 10, 2)->default(100)->after('water_limit');
+            $table->decimal('water_limit', 10, 2)->default(500)->after('remember_token');
+            $table->decimal('electricity_limit', 10, 2)->default(10)->after('water_limit');
         });
     }
 
